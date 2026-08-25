@@ -1,11 +1,11 @@
 class Solution {
     public int missingMultiple(int[] nums, int k) {
-        Set<Integer> hs = new HashSet<>();
+        int[] set = new int[201];
         for (int i: nums) {
-            hs.add(i);
+            set[i] += 1;
         }
         for (int i = k; i < 300; i += k) {
-            if (!hs.contains(i)) {
+            if (set[i] == 0) {
                 return i;
             }
         }
