@@ -20,9 +20,9 @@ public:
         int nothing = 0;
         int sell = 0;
         if (canBuy) {
-            buy = -prices[idx] + recursion(prices, false, idx + 1);
+            buy = -prices[idx] + recursion(prices, 0, idx + 1);
         } else {
-            sell = prices[idx] + recursion(prices, true, idx + 1);
+            sell = prices[idx] + recursion(prices, 1, idx + 1);
         }
         nothing = recursion(prices, canBuy, idx + 1);
 
