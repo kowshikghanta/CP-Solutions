@@ -1,14 +1,15 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        std::unordered_map<int, int> map;
-        int n = nums.size();
-
-        for (int i = 0; i < n; i++) {
-            if (map.contains(target - nums[i])) {
-                return {map[target - nums[i]], i};
+        for (std::size_t i = 0; i < nums.size(); i++) {
+            for (std::size_t j = i + 1; j < nums.size(); j++) {
+                if (nums[i] + nums[j] == target) {
+                    return {
+                        static_cast<int>(i), 
+                        static_cast<int>(j)
+                    };
+                }
             }
-            map[nums[i]] = i;
         }
 
         return {};
