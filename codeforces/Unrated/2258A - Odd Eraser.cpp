@@ -8,15 +8,14 @@ int main() {
 	while (t-- != 0) {
 		int n;
 		std::cin >> n;
-		int* arr = new int[n];
-		for (int i = 0; i < n; i++) {
-			std::cin >> arr[i];
+		int first, last;
+		std::cin >> first;
+		last = first;
+		
+		for (int i = 1; i < n; i++) {
+			std::cin >> last;
 		}
 		
-		if (n == 1) {
-			std::cout << arr[0] << std::endl;
-		} else {
-			std::cout << std::gcd(arr[0], arr[n - 1]) << std::endl;
-		}
+		std::cout << std::gcd(first, last) << std::endl;
 	}
 }
