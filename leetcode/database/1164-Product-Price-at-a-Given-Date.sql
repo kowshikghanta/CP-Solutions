@@ -7,8 +7,7 @@ FROM (
 LEFT JOIN (
     SELECT product_id, new_price
     FROM Products
-    WHERE change_date <= '2019-08-16'
-      AND (product_id, change_date) IN (
+    WHERE (product_id, change_date) IN (
           SELECT product_id, MAX(change_date)
           FROM Products
           WHERE change_date <= '2019-08-16'
