@@ -5,10 +5,14 @@ struct Result {
 
 class Solution {
 public:
+    vector<int> next;
+public:
     vector<int> maximumWeight(vector<vector<int>>& intervals) {
         int n = intervals.size();
         vector<vector<int>> interval(n, vector<int>(4, 0));
         vector<vector<Result>> dp(n, vector<Result>(5));
+        next.assign(n, -1);
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < 5; j++) {
                 dp[i][j].sum = -1;
@@ -42,17 +46,19 @@ public:
         }
 
         Result skip = recursion(interval, i + 1, n, count, dp);
-        int next = std::upper_bound(
-            interval.begin() + i + 1,
-            interval.end(),
-            interval[i][1],
-            [] (int end, const vector<int>& cur) {
-                return cur[0] > end;
-            }
-        ) - interval.begin();
+        if (next[i] == -1) {
+            next[i] = std::upper_bound(
+                interval.begin() + i + 1,
+                interval.end(),
+                interval[i][1],
+                [] (int end, const vector<int>& cur) {
+                    return cur[0] > end;
+                }
+            ) - interval.begin();
+        }
         std::sort(skip.indices.begin(), skip.indices.end());
 
-        Result take = recursion(interval, next, n, count + 1, dp);
+        Result take = recursion(interval, next[i], n, count + 1, dp);
         take.sum += interval[i][2];
         take.indices.push_back(interval[i][3]);
         std::sort(take.indices.begin(), take.indices.end());
