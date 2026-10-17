@@ -20,7 +20,7 @@ public:
         });
 
         vector<bool> visited(n, false);
-        int swaps = 0;
+        ll swaps = 0;
 
         for (int i = 0; i < n; i++) {
             if (visited[i] || temp[i][2] == i) {
