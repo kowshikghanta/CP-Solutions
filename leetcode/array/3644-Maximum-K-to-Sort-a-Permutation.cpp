@@ -4,25 +4,14 @@ class Solution {
 public:
     int sortPermutation(vector<int>& nums) {
         ll n = nums.size();
-        ll ans = 0;
-        vector<int> temp;
-        bool first = true;
-
-        for (int i : nums) {
-            temp.push_back(i);
-        }
-        sort(temp.begin(), temp.end());
+        ll ans = -1;
+        
         for (int i = 0; i < n; i++) {
-            if (nums[i] != temp[i]) {
-                if (first) {
-                    ans = nums[i];
-                    first = false;
-                } else {
-                    ans &= nums[i];
-                }
+            if (nums[i] != i) {
+                ans &= nums[i];
             }
         }
 
-        return ans;
+        return max({ans, 0LL});
     }
 };
