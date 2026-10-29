@@ -1,3 +1,4 @@
+
 #define vi vector<int>&
 using ll = long long;
 #define vvvll vector<vector<vector<ll>>>
@@ -11,27 +12,27 @@ public:
 
     int profitableSchemes(int n, int minProfit, vector<int>& group, vector<int>& profit) {
         int i = group.size();
-        dp.assign(i, vvll(n + 1, vll(minProfit + 1, -1)));
+        dp.assign(i + 1, vvll(n + 1, vll(minProfit + 1, 0)));
 
-        return recursion(n, i - 1, minProfit, group, profit);
-    }
-
-    ll recursion(int n, int i, int minProfit, vi group, vi profit) {
-        if (i < 0) {
-            return minProfit <= 0;
+        for (int j = 0; j <= n; j++) {
+            dp[0][j][0] = 1;
         }
 
-        if (dp[i][n][minProfit] != -1) {
-            return dp[i][n][minProfit];
+        for (int j = 1; j <= i; j++) {
+            for (int g = 0; g <= n; g++) {
+                for (int p = 0; p <= minProfit; p++) {
+                    ll not_pick = dp[j - 1][g][p];
+                    ll pick = 0;
+
+                    if (g >= group[j - 1]) {
+                        pick = dp[j - 1][g - group[j - 1]][max(0, p - profit[j - 1])];
+                    }
+
+                    dp[j][g][p] = (pick + not_pick) % mod;
+                }
+            }
         }
 
-        ll pick = 0;
-        ll not_pick = recursion(n, i - 1, minProfit, group, profit);
-
-        if (n >= group[i]) {
-            pick = recursion(n - group[i], i - 1, max(0, minProfit - profit[i]), group, profit);
-        }
-
-        return dp[i][n][minProfit] = (pick + not_pick) % mod;
+        return dp[i][n][minProfit];
     }
 };
