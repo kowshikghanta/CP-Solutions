@@ -1,4 +1,3 @@
-
 using ll = long long;
 using vi = vector<int>;
 using pii = pair<int, int>;
